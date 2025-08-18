@@ -16,11 +16,27 @@ scenarios:
               ano_publicacao: 2025
               genero: "Aventura"
               preco: 150.85
-              capture:
-                - json: "$.id"
+            capture:
+                - json: "$.livro.id"
                   as: "livro_id"
         - get:
             url: "/livros/{{ livro_id }}"
+            capture:
+              - json: "$.livro.titulo"
+                as: "livroTitulo"
+
+        - put:
+            url: "/livros/{{livro_id}}"
+            json:
+              titulo: "livro dia do estudnte 2"
+              autor: "jorel"
+              ano_publicacao: 2023
+              genero: "terror"
+              preco: 250
+        - delete:
+            url: "/livros/{{livro_id}}"
+        - get:
+            url: "/livros/busca?titulo={{ livroTitulo }}"
       #count: 100
 
       #teste de carga é testar o quanto o servidor aguenta a quantidade grande de requisições
